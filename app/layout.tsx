@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { PoweredBy } from "@/components/powered-by";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
           <div className="shell footer-bottom">
+            <PoweredBy />
             <span>© {new Date().getFullYear()} Sift &amp; Shop</span>
             <span>Prices and availability may change on partner sites.</span>
           </div>

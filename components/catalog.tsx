@@ -22,8 +22,8 @@ export function Catalog({ products }: { products: Product[] }) {
       })
       .sort((a, b) => {
         if (sort === "newest") return Date.parse(b.publishedAt) - Date.parse(a.publishedAt);
-        if (sort === "price-low") return a.price - b.price;
-        if (sort === "price-high") return b.price - a.price;
+        if (sort === "price-low") return (a.price ?? Number.POSITIVE_INFINITY) - (b.price ?? Number.POSITIVE_INFINITY);
+        if (sort === "price-high") return (b.price ?? Number.NEGATIVE_INFINITY) - (a.price ?? Number.NEGATIVE_INFINITY);
         return Number(b.featured) - Number(a.featured) || Date.parse(b.publishedAt) - Date.parse(a.publishedAt);
       });
   }, [filter, products, query, sort]);

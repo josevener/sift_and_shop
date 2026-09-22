@@ -4,10 +4,12 @@ A static Next.js affiliate storefront. Products are managed in one typed file an
 
 ## Add a product
 
-1. Add a square WebP or JPG image to `public/products/`.
-2. Copy a product object in `data/products.ts` and update its values.
-3. Paste the real Shopee, TikTok Shop, or other marketplace affiliate URL into `affiliateUrl`.
-4. Run `npm run build`; the catalog, detail page, metadata, sitemap, and related products update automatically.
+1. Add optimized local assets to `public/products/`.
+2. Copy a product object in `data/products.ts` and update its values. Keep `image` and `imageAlt` for the catalog card.
+3. For a gallery, add `images: [{ src, alt }, ...]`; the primary image should come first.
+4. When you have a product video, add `video: { src, poster, title }` with a local MP4 or WebM path. Videos are optional and only render when configured.
+5. Paste the real Shopee, TikTok Shop, or other marketplace affiliate URL into `affiliateUrl`.
+6. Run `npm run build`; the catalog, detail page, metadata, sitemap, and related products update automatically.
 
 Brand text and the deployed site URL live in `data/site.ts`. Set `NEXT_PUBLIC_SITE_URL` to the public domain in production.
 
@@ -28,8 +30,6 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 The production build is exported to `out/` and can be deployed on any static host.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 

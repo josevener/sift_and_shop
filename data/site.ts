@@ -3,4 +3,8 @@ export const siteConfig = {
   tagline: "Curated finds, well considered.",
   description: "A curated edit of useful, beautiful finds from Shopee and TikTok Shop.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://siftandshop.com",
+  poweredBy: {
+    label: "Zentrix Solutions",
+    url: "https://zentrix-solutions.vercel.app",
+  },
 } as const;

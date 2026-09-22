@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
-import { formatPrice, getProduct, products } from "@/data/products";
+import { ProductGallery } from "@/components/product-gallery";
+import { formatPrice, getProduct, getProductImages, products } from "@/data/products";
 import { siteConfig } from "@/data/site";
 
 export const dynamicParams = false;
@@ -25,7 +25,7 @@ export async function generateMetadata({
     openGraph: {
       title: product.name,
       description: product.shortDescription,
-      images: [{ url: product.image, alt: product.imageAlt }],
+      images: getProductImages(product).map((image) => ({ url: image.src, alt: image.alt })),
     },
   };
 }
@@ -48,15 +48,17 @@ export default async function ProductPage({params,}: PageProps<"/products/[slug]
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    image: `${siteConfig.url}${product.image}`,
+    image: getProductImages(product).map((image) => `${siteConfig.url}${image.src}`),
     description: product.description,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "PHP",
-      price: product.price,
-      url: product.affiliateUrl,
-      availability: "https://schema.org/InStock",
-    },
+    offers: product.price
+      ? {
+          "@type": "Offer",
+          priceCurrency: "PHP",
+          price: product.price,
+          url: product.affiliateUrl,
+          availability: "https://schema.org/InStock",
+        }
+      : undefined,
   };
 
   return (
@@ -75,15 +77,7 @@ export default async function ProductPage({params,}: PageProps<"/products/[slug]
         <span>{product.name}</span>
       </nav>
       <div className="product-detail">
-        <div className="product-main-image">
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            fill
-            priority
-            sizes="(max-width: 900px) 92vw, 52vw"
-          />
-        </div>
+        <ProductGallery product={product} />
         <div className="product-copy">
           <div className="product-meta">
             <span>{product.category}</span>
